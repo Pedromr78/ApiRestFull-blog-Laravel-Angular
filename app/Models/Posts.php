@@ -12,7 +12,8 @@ class Posts extends Model
     protected $fillable = [
         'title',
         'updated_at',
-        'content'
+        'content',
+        'image'
     ];
 
     public $timestamps = false;

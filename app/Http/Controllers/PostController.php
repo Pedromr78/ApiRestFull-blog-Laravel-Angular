@@ -20,13 +20,13 @@ class PostController extends Controller
     }
 
     public function index(){
-        $posts= Posts::all()->load('category');
+        $posts= Posts::all();
 
 
         return response()->json([
             'code'      =>200,
             'status'    =>'succes',
-            'categories' =>$posts
+            'posts' =>$posts
         ], 200);
 
     }
@@ -34,13 +34,14 @@ class PostController extends Controller
 
 
     public function show($id){
-        $post= Posts::find($id)->load('category');
+        //load me saca los datos de la tabla categories y users
+        $post= Posts::find($id)->load('categories')->load('users');
 
         if(is_object($post)){
             $data = [
                 'code'      =>200,
                 'status'    =>'succes',
-                'category' =>$post
+                'post' =>$post
             ];
         }else{
             $data = [
@@ -69,7 +70,7 @@ class PostController extends Controller
             'title'      => 'required',
             'content' => 'required',
             'category_id' => 'required',
-            'image'     => 'required'
+            'image'     => 'image|mimes:jpg,png,jpeg,gif,svg'
         ]);
         if($validate->fails()){
             $data = [
@@ -90,7 +91,7 @@ class PostController extends Controller
                 $data = [
                     'code'      =>200,
                     'status'    =>'succes',
-                    'category' =>$post
+                    'post' =>$post
                 ];
             }
         }else{
@@ -121,17 +122,18 @@ class PostController extends Controller
             unset($params_array['user_id']);
             unset($params_array['created_at']);
             unset($params_array['user']);
+            
             $JwtAuth= new JWTAuth();
             $token= $request->header('Authorization', null);
             //te devuelve todos los datos del usuario decodificados
             $user= $JwtAuth->checkToken($token, true);
             
-            $post = Posts::where('user_id', $user->sub)->where('id', $id)->update($params_array);
+            $postupdated = Posts::where('user_id', $user->sub)->where('id', $id)->update($params_array);
 
             $data = [
                 'code'      =>200,
                 'status'    =>'succes',
-                'post' =>$post,
+                'post'=>$postupdated,
                 'changes' =>$params_array
             ];
         }else{
