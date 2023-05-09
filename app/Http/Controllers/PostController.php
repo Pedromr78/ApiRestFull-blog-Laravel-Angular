@@ -70,7 +70,7 @@ class PostController extends Controller
             'title'      => 'required',
             'content' => 'required',
             'category_id' => 'required',
-            'image'     => 'image|mimes:jpg,png,jpeg,gif,svg'
+           
         ]);
         if($validate->fails()){
             $data = [
