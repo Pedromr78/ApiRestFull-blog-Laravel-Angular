@@ -1,0 +1,57 @@
+<div class="container p-3">
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-2 mt-2">
+  <a class="navbar-brand navbar-dark" ><img src="https://icons8.com/icon/71257/angularjs"> NG_BLOG</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/inicio']">Inicio <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" *ngFor="let category of categories">
+        <a class="nav-link" [routerLink]="['category/detail/' ,category.id]">{{category.name}}</a>
+      </li>
+     
+      
+   
+    </ul>
+    <ul class="navbar-nav navbar-right" *ngIf="!identity">
+      <a class="nav-link"  [routerLink]="['/user/login']">Login <span class="sr-only">(current)</span></a>
+     <a class="nav-link" [routerLink]="['/user/registro']">Register <span class="sr-only">(current)</span></a>
+    </ul>
+    <ul class="navbar-nav navbar-right">
+      <div class="nav-item" *ngIf="identity && identity.image">
+        <div class="avatar-mask">
+          <img src="{{url + 'avatar/' + identity.image }}" class="avatar-nav" >
+        </div>
+      </div>
+    </ul>
+    <ul class="navbar-nav navbar-right" *ngIf="identity && identity.name">
+     <div class="nav-item dropdown" >
+      
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{identity.name + ' ' + identity.surname}}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" [routerLink]="['/post/crear-entrada']">Crear Entrada</a>
+        <a class="dropdown-item" [routerLink]="['/categorias/crear-categoria']">Crear Categoria</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" [routerLink]="['/user/profile/',identity.sub]">Perfil</a>
+        <a class="dropdown-item" [routerLink]="['/user/ajustes']">Ajustes</a>
+        <a class="dropdown-item" [routerLink]="['/user/logout/1']">Cerrar sesion</a>
+      </div>
+    </div>
+  </ul>
+  </div>
+</nav>
+<!-- Contenido -->
+<router-outlet></router-outlet>
+<hr>
+<footer>
+    Blog Api Rest Full Angular Laravel &copy;
+</footer>
+</div>

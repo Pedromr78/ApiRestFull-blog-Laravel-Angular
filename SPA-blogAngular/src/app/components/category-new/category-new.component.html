@@ -1,0 +1,31 @@
+
+<div class="col-md-12 mt-3">
+
+
+    <h1>{{page_title}}</h1>
+
+
+    
+    <p *ngIf="status != 'succes'">Edita tu Perfin de Usuario</p>
+    
+    
+    <div class="alert alert-success col-md-7" *ngIf="status == 'succes'">
+        Los La Categoria se a guardado correctamente 
+    </div>
+    <div class="alert alert-danger" *ngIf="status == 'error'">
+        No se a podido agregar la Categoria, vuelve a intentarlo
+    </div>
+
+    <form action="" class="col-md-5 ml-0 p-0" #categoryNewForm="ngForm" (ngSubmit)="onSubmit(categoryNewForm)">
+        <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" class="form-control" #name="ngModel" [(ngModel)]="category.name" required>
+    
+            <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">El nombre de la Ca  tegoria no es valido</small>
+        </div>
+        
+        <input type="submit" value="Añadir Categoria" class="btn btn-success" [disabled]="categoryNewForm.invalid">
+    </form>
+    <br>
+    </div>
+   

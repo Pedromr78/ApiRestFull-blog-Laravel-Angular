@@ -1,0 +1,10 @@
+
+
+
+<div class="col-md-12" *ngIf="post">
+<h1>{{post?.title}}</h1>
+<p>
+   {{category?.name}} -  <a [routerLink]="['/user/profile',user.id]">{{user?.name +' '+user?.surname}}</a>
+</p>
+<p [innerHTML]="post?.content"></p>
+</div>
